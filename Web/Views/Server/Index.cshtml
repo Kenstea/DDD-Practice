@@ -1,0 +1,37 @@
+﻿@model Gnnovation.SIMS.ViewModels.ServerViewModel
+
+@{
+    ViewBag.Title = "Enterprises";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+        @Html.DisplayNameFor(model => model.StatusType)
+        <dt>
+        <dd>
+            @Html.DisplayFor(model => model.StatusType)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a href="javascript:void(0);" onclick="history.go(-1);">Back</a>
+</p>

@@ -1,0 +1,43 @@
+﻿@using DomainCore
+@{
+    ViewBag.Title = "Enterprises Dashboard";
+    ViewBag.Description = "Provide an insight of enterprise healthy status";
+}
+
+@model IEnumerable<DomainCore.Models.EnterpriseViewModel>
+
+@foreach (var enterprise in Model)
+{
+    var colorClass = "";
+    switch (enterprise.ServerStatus)
+    {
+        case Constant.ServerStatusType.Good:
+            colorClass = "bg-green";
+            break;
+        case Constant.ServerStatusType.Warning:
+            colorClass = "bg-yellow";
+            break;
+        case Constant.ServerStatusType.Critical:
+            colorClass = "bg-red";
+            break;
+        case Constant.ServerStatusType.NotAvailable:
+            colorClass = "bg-gray";
+            break;
+    }
+
+    <div class="col-lg-4 col-xs-7">
+        <!-- small box -->
+        <div class="small-box @colorClass">
+            <div class="inner">
+                <h3>@Html.DisplayFor(modelItem => enterprise.ShortName)</h3>
+                <p>Healthy: @Html.DisplayFor(modelItem => enterprise.ServerStatus)</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-home"></i>
+            </div>
+            <a href="@Url.Action("Detail","Enterprise",new { id = enterprise.Id })" class="small-box-footer">
+                More info <i class="fa fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+}

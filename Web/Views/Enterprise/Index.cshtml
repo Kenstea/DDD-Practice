@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<DomainCore.Models.EnterpriseViewModel>
+@using DomainCore
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Enterprises";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="box">
+    <table id="enterpriseTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Short Name
+                </th>
+                <th>
+                    Full Name
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var enterprise in Model)
+            {
+                var colorClass = "";
+                switch (enterprise.ServerStatus)
+                {
+                    case Constant.ServerStatusType.Good:
+                        colorClass = "bg-green";
+                        break;
+                    case Constant.ServerStatusType.Warning:
+                        colorClass = "bg-yellow";
+                        break;
+                    case Constant.ServerStatusType.Critical:
+                        colorClass = "bg-red";
+                        break;
+                    case Constant.ServerStatusType.NotAvailable:
+                        colorClass = "bg-gray";
+                        break;
+                }
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => enterprise.ShortName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => enterprise.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => enterprise.Address)
+                    </td>
+                    <td class="@colorClass">
+                        @Html.DisplayFor(modelItem => enterprise.ServerStatus)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = enterprise.Id }) |
+                        @Html.ActionLink("View", "Detail", new { id = enterprise.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = enterprise.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

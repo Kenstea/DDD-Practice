@@ -1,0 +1,94 @@
+﻿@using DomainCore
+@model DomainCore.Models.EnterpriseViewModel
+
+@{
+    ViewBag.Title = "Enterprise Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ServerStatus)
+        <dt>
+        <dd>
+            @Html.DisplayFor(model => model.ServerStatus)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a href="javascript:void(0);" onclick="history.go(-1);">Back</a>
+    @*@Html.ActionLink("Back to List", "Index")*@
+</p>
+<h3>Servers</h3>
+<div class="box">
+    <table id="serverTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var server in Model.Servers)
+            {
+                var colorClass = "";
+                switch (server.StatusType)
+                {
+                    case Constant.ServerStatusType.Good:
+                        colorClass = "bg-green";
+                        break;
+                    case Constant.ServerStatusType.Warning:
+                        colorClass = "bg-yellow";
+                        break;
+                    case Constant.ServerStatusType.Critical:
+                        colorClass = "bg-red";
+                        break;
+                    case Constant.ServerStatusType.NotAvailable:
+                        colorClass = "bg-gray";
+                        break;
+                }
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => server.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => server.Description)
+                    </td>
+                    <td class="@colorClass">
+                        @Html.DisplayFor(modelItem => server.StatusType)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = server.Id }) |
+                        @Html.ActionLink("View", "Detail","Server", new { id = server.Id },null) |
+                        @*@Html.ActionLink("View", "Detail", new {id = item.Id}) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = server.Id })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

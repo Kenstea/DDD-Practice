@@ -1,0 +1,19 @@
+﻿<header class="main-header">
+    @* BEGIN Logo *@
+    <a href="@Url.Action("Index", "Home")" class="logo">
+        @* Mini logo for sidebar 50x50 pixels *@
+        <span class="logo-mini"><b>SIMS</b></span>
+        @* Logo for regular state and mobile devices *@
+        <span class="logo-lg"><b>SIMS</b> Portal</span>
+    </a>
+    @* END Logo *@
+    @* BEGIN Header *@
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+            @Html.Partial("_LoginPartial")         
+        </div>        
+    </nav>
+</header>

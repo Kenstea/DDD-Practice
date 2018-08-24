@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Sims.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SimsStoreContainer">
+    <EntitySet Name="Contacts" EntityType="Sims.Store.Contacts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Enterprises" EntityType="Sims.Store.Enterprises" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Servers" EntityType="Sims.Store.Servers" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_dbo_Contacts_dbo_Enterprises_EnterpriseID" Association="Sims.Store.FK_dbo_Contacts_dbo_Enterprises_EnterpriseID">
+      <End Role="Enterprises" EntitySet="Enterprises" />
+      <End Role="Contacts" EntitySet="Contacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Servers_dbo_Enterprises_EnterpriseID" Association="Sims.Store.FK_dbo_Servers_dbo_Enterprises_EnterpriseID">
+      <End Role="Enterprises" EntitySet="Enterprises" />
+      <End Role="Servers" EntitySet="Servers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Contacts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EnterpriseId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="MiddleName" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedAt" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" DefaultValue="admin" />
+    <Property Name="ModifiedBy" Type="nvarchar(max)" Nullable="false" DefaultValue="admin" />
+  </EntityType>
+  <EntityType Name="Enterprises">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShortName" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedAt" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ModifiedBy" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Servers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Description" Type="nvarchar" Nullable="true" MaxLength="255" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="EnterpriseId" Type="int" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedAt" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ModifiedBy" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <Association Name="FK_dbo_Contacts_dbo_Enterprises_EnterpriseID">
+    <End Role="Enterprises" Type="Sims.Store.Enterprises" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Contacts" Type="Sims.Store.Contacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Enterprises">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contacts">
+        <PropertyRef Name="EnterpriseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Servers_dbo_Enterprises_EnterpriseID">
+    <End Role="Enterprises" Type="Sims.Store.Enterprises" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Servers" Type="Sims.Store.Servers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Enterprises">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Servers">
+        <PropertyRef Name="EnterpriseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

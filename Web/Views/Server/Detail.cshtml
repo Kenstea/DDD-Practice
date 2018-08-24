@@ -1,0 +1,58 @@
+﻿@using ApplicationCore
+@using DomainCore
+@model DomainCore.Models.ServerViewModel
+
+@{
+    ViewBag.Title = "Server Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var colorClass = "";
+    switch (Model.StatusType)
+    {
+        case Constant.ServerStatusType.Good:
+            colorClass = "bg-green";
+            break;
+        case Constant.ServerStatusType.Warning:
+            colorClass = "bg-yellow";
+            break;
+        case Constant.ServerStatusType.Critical:
+            colorClass = "bg-red";
+            break;
+        case Constant.ServerStatusType.NotAvailable:
+            colorClass = "bg-gray";
+            break;
+    }
+}
+
+<div class="box-body">
+    <form role="form">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.StatusType)
+            <dt>
+            <dd class="@colorClass">
+                @Html.DisplayFor(model => model.StatusType)
+            </dd>
+        </dl>
+    </form>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) | @Html.ActionLink("Back to Enterprise Detail", "Detail", "Enterprise", null, null, null, new { id = Model.EnterpriseId }, null)
+</p>
+
+
