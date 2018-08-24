@@ -12,3 +12,4 @@ It was created based on ASP.NET MVC5 template and AdminLTE.
 
 #Reference:
 https://github.com/almasaeed2010/AdminLTE
+https://github.com/donnemartin/system-design-primer
